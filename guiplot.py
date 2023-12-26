@@ -3,8 +3,11 @@ import numpy as np
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import PySimpleGUI as sg
 import matplotlib
-
 import matplotlib.pyplot as plt
+
+from py_expression.core import Exp
+exp = Exp()
+
 
 #fig = Figure(figsize=(5, 4), dpi=100)
 fig, ax = plt.subplots()
@@ -58,9 +61,26 @@ while True:
     print ("daddy is dumb",event,values)
     if event == "OK" or event == sg.WIN_CLOSED:
         break
+
+    if event == "Plot":
+        print ("plot button", values[0])       
+        operand =exp.parse(values[0])
+        
+        xvals =np.linspace(0,3,40)
+        
+        
+        
+        yvals = []
+        
+        for x in xvals:
+            yvals.append(operand.eval({"x":x}))
+              
+        
+                
+                
     # Add the plot to the window
-    line2.set_xdata(np.linspace(0,3,40))
-    line2.set_ydata(np.linspace(0,3,40))
+    line2.set_xdata(xvals)
+    line2.set_ydata(yvals)
     update_figure(figureCanvas, window["-CANVAS-"].TKCanvas, fig)
 
 
