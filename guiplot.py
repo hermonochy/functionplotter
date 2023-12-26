@@ -4,11 +4,18 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import PySimpleGUI as sg
 import matplotlib
 
+import matplotlib.pyplot as plt
 
-
-fig = Figure(figsize=(5, 4), dpi=100)
+#fig = Figure(figsize=(5, 4), dpi=100)
+fig, ax = plt.subplots()
 t = np.arange(0, 3, .01)
-fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))
+
+line2 = ax.plot(t, 2 * np.sin(2 * np.pi * t))[0]
+ax.set(xlim=[0, 3], ylim=[-4, 10])
+
+
+
+#fig.add_subplot(111).plot(t, 2 * np.sin(2 * np.pi * t))
 matplotlib.use("TkAgg")
 
 def draw_figure(canvas, figure):
@@ -16,6 +23,13 @@ def draw_figure(canvas, figure):
     figure_canvas_agg.draw()
     figure_canvas_agg.get_tk_widget().pack(side="top", fill="both", expand=1)
     return figure_canvas_agg
+
+def update_figure(fg, canvas, figure):
+    #figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
+    fg.draw()
+    #figure_canvas_agg.get_tk_widget().pack(side="top", fill="both", expand=1)
+    #return figure_canvas_agg
+
     
 layout = [
     [sg.Text("Plot test")],
@@ -35,6 +49,8 @@ window = sg.Window(
     font="Helvetica 18",
 )
 
+figureCanvas = draw_figure(window["-CANVAS-"].TKCanvas, fig)
+
 while True:
     event, values = window.read()
     # End program if user closes window or
@@ -43,7 +59,9 @@ while True:
     if event == "OK" or event == sg.WIN_CLOSED:
         break
     # Add the plot to the window
-    draw_figure(window["-CANVAS-"].TKCanvas, fig)
+    line2.set_xdata(np.linspace(0,3,40))
+    line2.set_ydata(np.linspace(0,3,40))
+    update_figure(figureCanvas, window["-CANVAS-"].TKCanvas, fig)
 
 
 
