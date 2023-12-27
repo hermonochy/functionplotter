@@ -74,20 +74,15 @@ while True:
         
         
         yvals = []
+        try:
+          for x in xvals:
+              yvals.append(operand.eval({"x":x}))
+          # Add the plot to the window
+          line2.set_xdata(xvals)
+          line2.set_ydata(yvals)
+          update_figure(figureCanvas, window["-CANVAS-"].TKCanvas, fig)
+
+        except (KeyError, TypeError,ValueError):
+          print("formel error")     
         
-        for x in xvals:
-            yvals.append(operand.eval({"x":x}))
-              
-        
-                
-                
-    # Add the plot to the window
-    line2.set_xdata(xvals)
-    line2.set_ydata(yvals)
-    update_figure(figureCanvas, window["-CANVAS-"].TKCanvas, fig)
-
-
-
-
-
 window.close()
