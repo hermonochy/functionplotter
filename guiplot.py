@@ -14,7 +14,7 @@ fig, ax = plt.subplots()
 t = np.arange(0, 3, .01)
 
 line2 = ax.plot(t, 2 * np.sin(2 * np.pi * t))[0]
-ax.set(xlim=[0, 3], ylim=[-4, 10])
+#ax.set(xlim=[0, 3], ylim=[-4, 10])
 
 
 
@@ -37,6 +37,7 @@ def update_figure(fg, canvas, figure):
 layout = [
     [sg.Text("Plot test")],
     [sg.Canvas(key="-CANVAS-")],
+    [sg.Slider( orientation = "horizontal",key = "defstart",range = (-100,0)),sg.Slider( orientation = "horizontal",key = "defend",range = (0,100)) ],    
     [sg.In("formel")],    
     [sg.Button("Plot")],
     [sg.Button("Ok")],    
@@ -66,7 +67,9 @@ while True:
         print ("plot button", values[0])       
         operand =exp.parse(values[0])
         
-        xvals =np.linspace(0,3,40)
+        ax.set(xlim=[values["defstart"], values["defend"]], ylim=[-4, 10])
+        
+        xvals =np.linspace(values["defstart"],values["defend"],500 )
         
         
         
