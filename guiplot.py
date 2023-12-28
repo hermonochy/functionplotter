@@ -37,8 +37,8 @@ def update_figure(fg, canvas, figure):
 layout = [
     [sg.Text("Plot test")],
     [sg.Canvas(key="-CANVAS-")],
-    [sg.Slider( orientation = "horizontal",key = "defstart",range = (-100,0)),sg.Slider( orientation = "horizontal",key = "defend",range = (0,100)) ],    
-    [sg.In("formel")],    
+    [sg.Slider( orientation = "horizontal",key = "defstart",range = (-100,0),default_value = -3), sg.Slider( orientation = "horizontal",key = "defend",range = (0,100),default_value = 3) ],    
+    [sg.In("sin (x)")],    
     [sg.Button("Plot")],
     [sg.Button("Ok")],    
 ]
