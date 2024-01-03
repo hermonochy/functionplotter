@@ -27,8 +27,8 @@ leftPane = [
     [sg.Canvas(key="-CANVAS-")],]
 rightPane = [
     [sg.Text("x limits")],
-    [sg.Slider( orientation = "horizontal",key = "defstart",range = (-100,0),default_value = -3), 
-       sg.Slider( orientation = "horizontal",key = "defend",range = (0,100),default_value = 3) ],
+    [sg.Slider( orientation = "horizontal",key = "xstart",range = (-100,0),default_value = -3), 
+       sg.Slider( orientation = "horizontal",key = "xend",range = (0,100),default_value = 3) ],
     [sg.Text("y limits")],    
     [sg.Slider( orientation = "horizontal",key = "ystart",range = (-100,0),default_value = -4), 
        sg.Slider( orientation = "horizontal",key = "yend",range = (0,100),default_value = 10) ],       
@@ -50,6 +50,11 @@ window = sg.Window(
     element_justification="center",
     font="Helvetica 18",
 )
+window['xstart'].bind('<ButtonRelease-1>', ' Release')
+window['xend'].bind('<ButtonRelease-1>', ' Release')
+window['ystart'].bind('<ButtonRelease-1>', ' Release')
+window['yend'].bind('<ButtonRelease-1>', ' Release')
+
 
 figureCanvas = draw_figure(window["-CANVAS-"].TKCanvas, fig)
 
@@ -58,17 +63,17 @@ while True:
     print ("event loop info: ",event,values)
     if event == "Quit" or event == sg.WIN_CLOSED:
         break
-    try:
-       if event == "Plot":
-           print ("plot button", values['expression'])       
+    if event == "Plot":
+        print ("plot button", values['expression'])
+    try:       
            operand =exp.parse(values['expression'])
     except (Exp.ExpressionError,) as e:
       sg.popup("expression error" + str(e))  
       
          
-    ax.set(xlim=[values["defstart"], values["defend"]], ylim=[values["ystart"], values["yend"]])
+    ax.set(xlim=[values["xstart"], values["xend"]], ylim=[values["ystart"], values["yend"]])
         
-    xvals =np.linspace(values["defstart"],values["defend"],500 )
+    xvals =np.linspace(values["xstart"],values["xend"],500 )
     yvals = []
         
     try:
