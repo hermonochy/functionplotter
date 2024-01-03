@@ -22,14 +22,24 @@ def draw_figure(canvas, figure):
 def update_figure(fg,):
     fg.draw()
     
-layout = [
-    [sg.Text("Plot test")],
-    [sg.Canvas(key="-CANVAS-")],
+leftPane = [
+    [sg.Text("Plot")],
+    [sg.Canvas(key="-CANVAS-")],]
+rightPane = [
+    [sg.Text("x limits")],
     [sg.Slider( orientation = "horizontal",key = "defstart",range = (-100,0),default_value = -3), 
-       sg.Slider( orientation = "horizontal",key = "defend",range = (0,100),default_value = 3) ],    
-    [sg.In("sin (x)", key='expression')],    
+       sg.Slider( orientation = "horizontal",key = "defend",range = (0,100),default_value = 3) ],
+    [sg.Text("y limits")],    
+    [sg.Slider( orientation = "horizontal",key = "ystart",range = (-100,0),default_value = -4), 
+       sg.Slider( orientation = "horizontal",key = "yend",range = (0,100),default_value = 10) ],       
+    [sg.Text("Formula")],         
+    [sg.In("sin (x)", key='expression')], 
+    [sg.Canvas(key="-CANVAS-")],    
     [sg.Button("Plot")],
-    [sg.Button("Quit")],    
+    [sg.Button("Quit")],]
+
+layout = [
+  [sg.Column(leftPane, element_justification='c' ),sg.Column(rightPane, element_justification='c' ),]
 ]
 
 window = sg.Window(
@@ -48,23 +58,26 @@ while True:
     print ("event loop info: ",event,values)
     if event == "Quit" or event == sg.WIN_CLOSED:
         break
-
-    if event == "Plot":
-        print ("plot button", values['expression'])       
-        operand =exp.parse(values['expression'])
+    try:
+       if event == "Plot":
+           print ("plot button", values['expression'])       
+           operand =exp.parse(values['expression'])
+    except (Exp.ExpressionError,) as e:
+      sg.popup("expression error" + str(e))  
+      
+         
+    ax.set(xlim=[values["defstart"], values["defend"]], ylim=[values["ystart"], values["yend"]])
         
-        ax.set(xlim=[values["defstart"], values["defend"]], ylim=[-4, 10])
+    xvals =np.linspace(values["defstart"],values["defend"],500 )
+    yvals = []
         
-        xvals =np.linspace(values["defstart"],values["defend"],500 )
-        yvals = []
-        
-        try:
-          for x in xvals:
-              yvals.append(operand.eval({"x":x}))
-          line2.set_xdata(xvals)
-          line2.set_ydata(yvals)
-          update_figure(figureCanvas)
-        except (KeyError, TypeError,ValueError) as e:
-          sg.popup("Formula cannot be evaluated. " + str(e))     
+    try:
+      for x in xvals:
+          yvals.append(operand.eval({"x":x}))
+      line2.set_xdata(xvals)
+      line2.set_ydata(yvals)
+      update_figure(figureCanvas)
+    except (KeyError, TypeError,ValueError,) as e:
+      sg.popup("Formula cannot be evaluated. " + str(e))     
         
 window.close()
