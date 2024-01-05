@@ -4,6 +4,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 import PySimpleGUI as sg
 import matplotlib
 import matplotlib.pyplot as plt
+import py_expression.core
 from py_expression.core import Exp
 matplotlib.use("TkAgg")
 
@@ -26,12 +27,16 @@ leftPane = [
     [sg.Text("Plot")],
     [sg.Canvas(key="-CANVAS-")],]
 rightPane = [
-    [sg.Text("x limits")],
+    [sg.Text("Controls")],
+    [sg.Text('_'*50)],
+    [sg.Text("X limits")],
     [sg.Slider( orientation = "horizontal",key = "xstart",range = (-100,0),default_value = -3), 
        sg.Slider( orientation = "horizontal",key = "xend",range = (0,100),default_value = 3) ],
-    [sg.Text("y limits")],    
+    [sg.Text('_'*40)],    
+    [sg.Text("Y limits")],    
     [sg.Slider( orientation = "horizontal",key = "ystart",range = (-100,0),default_value = -4), 
-       sg.Slider( orientation = "horizontal",key = "yend",range = (0,100),default_value = 10) ],       
+       sg.Slider( orientation = "horizontal",key = "yend",range = (0,100),default_value = 10) ],
+    [sg.Text('_'*40)],          
     [sg.Text("Formula")],         
     [sg.In("sin (x)", key='expression')], 
     [sg.Canvas(key="-CANVAS-")],    
@@ -43,7 +48,7 @@ layout = [
 ]
 
 window = sg.Window(
-    "Matplotlib Single Graph",
+    "Formula Plotter",
     layout,
     location=(0, 0),
     finalize=True,
@@ -67,9 +72,9 @@ while True:
         print ("plot button", values['expression'])
     try:       
            operand =exp.parse(values['expression'])
-    except (Exp.ExpressionError,) as e:
+    except (py_expression.core.ExpressionError,) as e:
       sg.popup("expression error" + str(e))  
-      
+      continue
          
     ax.set(xlim=[values["xstart"], values["xend"]], ylim=[values["ystart"], values["yend"]])
         
@@ -84,5 +89,5 @@ while True:
       update_figure(figureCanvas)
     except (KeyError, TypeError,ValueError,) as e:
       sg.popup("Formula cannot be evaluated. " + str(e))     
-        
+      continue  
 window.close()
