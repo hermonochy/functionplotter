@@ -19,10 +19,10 @@ def draw_figure(canvas, figure):
     figure_canvas_agg.draw()
     figure_canvas_agg.get_tk_widget().pack(side="top", fill="both", expand=1)
     return figure_canvas_agg
-
+                                                                                          
 def update_figure(fg,):
     fg.draw()
-    
+                                                                                    
 leftPane = [
     [sg.Text("Plot")],
     [sg.Canvas(key="-CANVAS-")],]
@@ -75,12 +75,12 @@ while True:
     except (py_expression.core.ExpressionError,) as e:
       sg.popup("expression error" + str(e))  
       continue
-         
+                                                          
     ax.set(xlim=[values["xstart"], values["xend"]], ylim=[values["ystart"], values["yend"]])
-        
+                                   
     xvals =np.linspace(values["xstart"],values["xend"],500 )
     yvals = []
-        
+                                                             
     try:
       for x in xvals:
           yvals.append(operand.eval({"x":x}))
