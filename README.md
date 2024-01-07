@@ -8,6 +8,7 @@ This works by evaluating a function with module [py-expression](https://pypi.org
 
 ## Installation
 You should get a copy of the code using `git clone`.
+`git clone https://github.com/hermonochy/functionplotter.git`
 If `git` is not on your system, you may install it with
 `sudo apt install git` on linux or with `brew install git` on Mac OS X.
 If you use MS Windows, find out yourself. Hint: There is a git console for Windows. 
