@@ -8,12 +8,18 @@ import py_expression.core
 from py_expression.core import Exp
 matplotlib.use("TkAgg")
 
+MAXPLOTLINES=10
+
 exp = Exp()
 
 fig, ax = plt.subplots()
 t = np.arange(0, 3, .01)
-line2 = ax.plot(t, 2 * np.sin(2 * np.pi * t))[0]
 
+line2 = []
+for i in range(0,MAXPLOTLINES):
+  line = ax.plot(t, 2 * np.sin(2 * np.pi * t))[0]
+  line2.append(line)
+  
 def draw_figure(canvas, figure):
     figure_canvas_agg = FigureCanvasTkAgg(figure, canvas)
     figure_canvas_agg.draw()
@@ -69,9 +75,16 @@ while True:
     if event == "Quit" or event == sg.WIN_CLOSED:
         break
     if event == "Plot":
+        for l in line2:
+           l.set_xdata(None)
+           l.set_ydata(None)
         print ("plot button", values['expression'])
     try:       
-           operand =exp.parse(values['expression'])
+      expressionListString = values['expression']
+      expressionList = expressionListString.split (',')
+      operand = []
+      for i in range(0,len(expressionList)):
+           operand.append(exp.parse(expressionList[i]))
     except (py_expression.core.ExpressionError,) as e:
       sg.popup("expression error" + str(e))  
       continue
@@ -82,10 +95,16 @@ while True:
     yvals = []
                                                              
     try:
-      for x in xvals:
-          yvals.append(operand.eval({"x":x}))
-      line2.set_xdata(xvals)
-      line2.set_ydata(yvals)
+      for i in range(0,len(operand)):
+        yvals.append([])
+        for x in xvals:
+            yvals[i].append(operand[i].eval({"x":x}))
+        
+        line2[i].set_xdata(xvals)
+        line2[i].set_ydata(yvals[i])
+      
+
+      
       update_figure(figureCanvas)
     except (KeyError, TypeError,ValueError,) as e:
       sg.popup("Formula cannot be evaluated. " + str(e))     

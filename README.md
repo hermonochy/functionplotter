@@ -29,9 +29,22 @@ It's recommended to use [virtual environments](https://frankcorso.dev/setting-up
 ### Start program
 `python3 guiplot.py `
 
+Enter the function you want to plot into the textfield and press the plot button.
+Adjust area to plot with the sliders.
+
+It is possible to plot more than one function. Separate them with a comma.
+![The plotting window with multiple functions](images/plotterGUImultiPlot.png)
+
+### Running the program again (if the virtual environment exists)
+If running the program again on the same computer, the virtual environment does not need to be created and no packages need to be installed.
+Just go to the directory of the program, activate the virtual environment, and start the program as before.
+`source ./bin/activate`
+`python3 guiplot.py `
+
 
 ## Future work
-- GUI error messages.
+- More GUI error messages.
 - 2D/3D plot
 - Widgets for fine grained definition area.
-- Multilot with listbox selection.
+- Saving and reloading functions.
+- Saving plot.
