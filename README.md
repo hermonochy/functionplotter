@@ -10,6 +10,8 @@ This works by evaluating a function with module [py-expression](https://pypi.org
 You should get a copy of the code using `git clone`.
 
 `git clone https://github.com/hermonochy/functionplotter.git`
+then you need to go into the directory.
+`cd functionplotter`
 
 If `git` is not on your system, you may install it with
 `sudo apt install git` on linux or with `brew install git` on Mac OS X.
@@ -18,7 +20,7 @@ If you use MS Windows, find out yourself. Hint: There is a git console for Windo
 It's recommended to use [virtual environments](https://frankcorso.dev/setting-up-python-environment-venv-requirements.html) as below to avoid headaches with Python module conflicts. 
 
 ### Create a virtual environment for Python:
-`python -m venv .`
+`python3 -m venv .`
 
 ### Activate virtual environment:
 `source ./bin/activate`
