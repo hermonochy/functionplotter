@@ -10,7 +10,9 @@ This works by evaluating a function with module [py-expression](https://pypi.org
 You should get a copy of the code using `git clone`.
 
 `git clone https://github.com/hermonochy/functionplotter.git`
-then you need to go into the directory.
+
+Then you need to go into the directory.
+
 `cd functionplotter`
 
 If `git` is not on your system, you may install it with
