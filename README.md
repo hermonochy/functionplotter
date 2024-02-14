@@ -22,7 +22,7 @@ If you use MS Windows, find out yourself. Hint: There is a git console for Windo
 It's recommended to use [virtual environments](https://frankcorso.dev/setting-up-python-environment-venv-requirements.html) as below to avoid headaches with Python module conflicts. 
 
 ### Create a virtual environment for Python:
-`python3 -m venv .`
+`python3 -m venv .` If this does not work, try `pip install venv`.
 
 ### Activate virtual environment:
 `source ./bin/activate`
