@@ -2,7 +2,7 @@
 
 ## Overview
 Plots mathematical functions inputted by user.
-This works by evaluating a function with module [py-expression](https://pypi.org/project/py-expression/), creating a function graph with [Matplotlib](https://matplotlib.org/). This function graph is displayed in a Graphical User interface * (GUI) * [PySimpleGUI](https://www.pysimplegui.org). Sliders allow selection of ranges to be plotted. 
+This works by evaluating a function with module [py-expression](https://pypi.org/project/py-expression/), creating a function graph with [Matplotlib](https://matplotlib.org/). This function graph is displayed in a Graphical User interface (GUI)[PySimpleGUI](https://www.pysimplegui.org). Sliders allow selection of ranges to be plotted. 
 
 ![The plotting window](images/plotterGUI.png)
 
